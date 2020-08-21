@@ -8,6 +8,7 @@ class SortingRobot:
         self._position = 0      # The list position the robot is at
         self._light = "OFF"     # The state of the robot's light
         self._time = 0          # A time counter (stretch)
+        self.maxDiff = None
 
     def can_move_right(self):
         """
@@ -94,10 +95,46 @@ class SortingRobot:
 
     def sort(self):
         """
-        Sort the robot's list.
+        def merge(arrA, arrB):
+            arrC = []
+            while(arrA and arrB):
+                if(arrA[0] >= arrB[0]): arrC.append(arrB.pop(0)) 
+                else: arrC.append(arrA.pop(0))
+            if(arrA): arrC += arrA
+            else: arrC += arrB
+            return arrC
+
+        def merge_sort(arr):
+            if (arr == [] or arr[-1] == arr[0]): return arr # if arr has no elements or 1 element return arr
+            return merge(merge_sort(arr[::2]), merge_sort(arr[1::2])) # else take the ordered halves and compare them in merge
         """
-        # Fill this out
-        pass
+
+        def merge_sort(arr):
+            if len(arr) <= 1: return arr # return if one item or less
+            left, right = merge_sort(arr[:len(arr) // 2 ]), merge_sort(arr[len(arr) // 2:]) #recurse left and right split until 1 item   len(arr) // 2 = midpoint
+            return merge(left, right, arr.copy()) # Merge each side together
+
+
+        def merge(left, right, merged):
+
+            left_cur, right_cur = 0, 0
+            while left_cur < len(left) and right_cur < len(right):
+                # Sort each one and place into the result
+                
+                if left[left_cur] <= right[right_cur]:
+                    merged[left_cur+right_cur]=left[left_cur]
+                    left_cur += 1
+                else:
+                    merged[left_cur + right_cur] = right[right_cur]
+                    right_cur += 1
+                    
+            for left_cur in range(left_cur, len(left)): merged[left_cur + right_cur] = left[left_cur]
+            for right_cur in range(right_cur, len(right)): merged[left_cur + right_cur] = right[right_cur]
+
+            return merged
+
+        self._list = merge_sort(self._list)
+
 
 
 if __name__ == "__main__":
