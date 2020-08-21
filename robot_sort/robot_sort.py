@@ -110,35 +110,26 @@ class SortingRobot:
         """
 
         def merge_sort(arr):
-            # The last array split
-            if len(arr) <= 1:
-                return arr
-            mid = len(arr) // 2
-            # Perform merge_sort recursively on both halves
-            left, right = merge_sort(arr[:mid]), merge_sort(arr[mid:])
-
-            # Merge each side together
-            return merge(left, right, arr.copy())
+            if len(arr) <= 1: return arr # return if one item or less
+            left, right = merge_sort(arr[:len(arr) // 2 ]), merge_sort(arr[len(arr) // 2:]) #recurse left and right split until 1 item   len(arr) // 2 = midpoint
+            return merge(left, right, arr.copy()) # Merge each side together
 
 
         def merge(left, right, merged):
 
-            left_cursor, right_cursor = 0, 0
-            while left_cursor < len(left) and right_cursor < len(right):
-            
+            left_cur, right_cur = 0, 0
+            while left_cur < len(left) and right_cur < len(right):
                 # Sort each one and place into the result
-                if left[left_cursor] <= right[right_cursor]:
-                    merged[left_cursor+right_cursor]=left[left_cursor]
-                    left_cursor += 1
-                else:
-                    merged[left_cursor + right_cursor] = right[right_cursor]
-                    right_cursor += 1
-                    
-            for left_cursor in range(left_cursor, len(left)):
-                merged[left_cursor + right_cursor] = left[left_cursor]
                 
-            for right_cursor in range(right_cursor, len(right)):
-                merged[left_cursor + right_cursor] = right[right_cursor]
+                if left[left_cur] <= right[right_cur]:
+                    merged[left_cur+right_cur]=left[left_cur]
+                    left_cur += 1
+                else:
+                    merged[left_cur + right_cur] = right[right_cur]
+                    right_cur += 1
+                    
+            for left_cur in range(left_cur, len(left)): merged[left_cur + right_cur] = left[left_cur]
+            for right_cur in range(right_cur, len(right)): merged[left_cur + right_cur] = right[right_cur]
 
             return merged
 
