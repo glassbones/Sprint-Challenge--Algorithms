@@ -10,23 +10,24 @@ a)  a = 0
     while (a < n * n * n):
       a = a + n * n
 ```
-
+# O(n) 
 
 ```
-b)  sum = 0
-    for i in range(n):
-      j = 1
-      while j < n:
-        j *= 2
+b)  sum = 0               (c1)
+    for i in range(n):   (n times)
+      j = 1               (c2)
+      while j < n:       (n times)
+        j *= 2            (c3) this is a constant * 2 until c > n..... uhh linearithmic O(n log n) or polynomial O(n^c)
         sum += 1
 ```
+# O(n**2)
 
 ```
 c)  def bunnyEars(bunnies):
       if bunnies == 0:
-        return 0
+        return 0    (c1)
 
-      return 2 + bunnyEars(bunnies-1)
+      return 2 + bunnyEars(bunnies-1)    O(n)
 ```
 
 ## Exercise II
